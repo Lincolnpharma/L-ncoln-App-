@@ -1,15 +1,13 @@
 {
-  "name": "Pharma App UAM",
+  "name": "Pharma App",
   "short_name": "Pharma",
-  "start_url": "index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2e8b57",
-  "icons": [
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/1000/1000951.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+  "icons": [{
+    "src": "https://cdn-icons-png.flaticon.com/512/1000/1000951.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }]
 }
