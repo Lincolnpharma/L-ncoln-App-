@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharma App - UAM</title>
+    
+    <link rel="manifest" href='data:application/manifest+json,{"name":"Pharma App","short_name":"Pharma","start_url":".","display":"standalone","background_color":"#ffffff","theme_color":"#2e8b57","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/1000/1000951.png","sizes":"512x512","type":"image/png"}]}'>
+    <meta name="theme-color" content="#2e8b57">
+
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e8f5e9; padding: 20px; display: flex; justify-content: center; }
+        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; border-top: 5px solid #2e8b57; }
+        h2 { color: #2e8b57; text-align: center; margin-top: 0; }
+        .uam-badge { text-align: center; font-size: 0.8em; color: #666; margin-bottom: 20px; }
+        label { display: block; margin-top: 15px; font-weight: bold; color: #2c3e50; }
+        input, select { width: 100%; padding: 12px; margin-top: 8px; border: 2px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 16px; outline: none; }
+        input:focus { border-color: #2e8b57; }
+        .result-box { margin-top: 25px; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.3em; font-weight: bold; transition: all 0.3s; }
+        .safe { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Pharma App 💊</h2>
+    <div class="uam-badge">Outil d'étude - UAM Niamey</div>
+    
+    <label>Médicament (Limite Max) :</label>
+    <select id="med" oninput="calculer()">
+        <option value="500">Paracétamol (500mg)</option>
+        <option value="1000">Paracétamol (1000mg)</option>
+        <option value="400">Ibuprofène (400mg)</option>
+    </select>
+
+    <label>Poids du patient (kg) :</label>
+    <input type="number" id="poids" placeholder="Ex: 60" oninput="calculer()">
+
+    <label>Dose prescrite (mg/kg) :</label>
+    <input type="number" id="dose" placeholder="Ex: 15" oninput="calculer()">
+
+    <div id="resultat" class="result-box safe">
+        Dose totale : 0 mg
+    </div>
+</div>
+
+<script>
+    // Logique du calculateur
+    function calculer() {
+        const poids = parseFloat(document.getElementById('poids').value);
+        const dose = parseFloat(document.getElementById('dose').value);
+        const max = parseFloat(document.getElementById('med').value);
+        const resDiv = document.getElementById('resultat');
+        
+        if(!isNaN(poids) && !isNaN(dose)) {
+            const total = poids * dose;
+            resDiv.innerHTML = "Dose totale : " + total + " mg";
+            
+            if(total > max) {
+                resDiv.className = "result-box danger";
+                resDiv.innerHTML += "<br><small>⚠️ Dépasse la dose max !</small>";
+            } else {
+                resDiv.className = "result-box safe";
+            }
+        } else {
+            resDiv.innerHTML = "En attente de saisie...";
+            resDiv.className = "result-box safe";
+        }
+    }
+
+    // Le moteur qui permet l'installation (Service Worker simplifié)
+    if ('serviceWorker' in navigator) {
+        const sw = 'data:application/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIGU9Pnt9KTs=';
+        navigator.serviceWorker.register(sw);
+    }
+</script>
+
+</body>
+</html>
