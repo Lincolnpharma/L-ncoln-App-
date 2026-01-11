@@ -1,2 +1,2 @@
-# Lincoln-App
+# App~Lincoln
 Application de calcul de dose pour mes études à l'UAM.
